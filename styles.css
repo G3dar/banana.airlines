@@ -421,9 +421,9 @@ button { font: inherit; cursor: pointer; }
 
 .route__stops {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-template-rows: auto auto auto auto;
-  gap: 0.6rem 0.5rem;
+  gap: 0.6rem 0.45rem;
   position: relative;
   align-items: center;
   justify-items: center;
@@ -515,47 +515,95 @@ button { font: inherit; cursor: pointer; }
   50%      { box-shadow: 0 0 0 10px rgba(217, 75, 62, 0.04), 2px 2px 0 var(--ink); }
 }
 
-/* Despegue (the big one) */
-.stop--launch .stop__dot {
+/* Big milestones — shared base */
+.stop--launch .stop__dot,
+.stop--lock .stop__dot,
+.stop--fest .stop__dot {
   width: 56px;
   height: 56px;
-  background: var(--banana);
   border-width: 3px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 0 0 5px rgba(217, 75, 62, 0.22),
-    4px 4px 0 var(--coral);
 }
-.stop--launch .stop__dot svg {
-  width: 32px;
+.stop--launch .stop__dot svg,
+.stop--lock .stop__dot svg,
+.stop--fest .stop__dot svg {
+  width: 30px;
   height: auto;
   display: block;
 }
-.stop--launch .stop__date {
-  background: var(--banana);
-  color: var(--ink);
+.stop--launch .stop__date,
+.stop--lock .stop__date,
+.stop--fest .stop__date {
   padding: 0.2rem 0.55rem 0.15rem;
   border: 1.5px solid var(--ink);
   border-radius: 999px;
   font-weight: 500;
   letter-spacing: 0.18em;
 }
-.stop--launch .stop__label {
-  color: var(--coral);
-  font-size: 1.05rem;
+.stop--launch .stop__label,
+.stop--lock .stop__label,
+.stop--fest .stop__label {
+  font-size: 1rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-.stop--launch .stop__sub {
+.stop--launch .stop__sub,
+.stop--lock .stop__sub,
+.stop--fest .stop__sub {
   font-style: normal;
   font-weight: 600;
   color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+/* Despegue (Jun 1) — banana */
+.stop--launch .stop__dot {
+  background: var(--banana);
+  box-shadow:
+    0 0 0 5px rgba(217, 75, 62, 0.22),
+    4px 4px 0 var(--coral);
+}
+.stop--launch .stop__date {
+  background: var(--banana);
+  color: var(--ink);
+}
+.stop--launch .stop__label {
+  color: var(--coral);
+}
+
+/* Demo lock (Sep 19) — palm */
+.stop--lock .stop__dot {
+  background: var(--palm-light);
+  box-shadow:
+    0 0 0 5px rgba(44, 85, 48, 0.22),
+    4px 4px 0 var(--palm);
+}
+.stop--lock .stop__date {
+  background: var(--palm-light);
+  color: var(--ink);
+}
+.stop--lock .stop__label {
+  color: var(--palm);
+}
+
+/* Next Fest (Oct 19) — coral pink */
+.stop--fest .stop__dot {
+  background: var(--pink);
+  box-shadow:
+    0 0 0 5px rgba(217, 75, 62, 0.30),
+    4px 4px 0 var(--coral);
+}
+.stop--fest .stop__date {
+  background: var(--pink);
+  color: var(--ink);
+}
+.stop--fest .stop__label {
+  color: var(--coral-deep);
 }
 
 /* Mobile / vertical layout */
@@ -626,11 +674,15 @@ button { font: inherit; cursor: pointer; }
     max-width: none;
   }
 
-  .stop--launch .stop__dot {
+  .stop--launch .stop__dot,
+  .stop--lock .stop__dot,
+  .stop--fest .stop__dot {
     width: 44px;
     height: 44px;
   }
-  .stop--launch .stop__dot svg { width: 24px; }
+  .stop--launch .stop__dot svg,
+  .stop--lock .stop__dot svg,
+  .stop--fest .stop__dot svg { width: 24px; }
 }
 
 /* ============================================
@@ -1000,9 +1052,18 @@ button { font: inherit; cursor: pointer; }
   box-shadow: 4px 4px 0 var(--ink);
   position: relative;
 }
-.month__banner--jun {
-  background: var(--sky-soft);
+.month__banner--jun { background: var(--sky-soft); }
+.month__banner--jul { background: #FCE3DF; }
+.month__banner--ago { background: #D6E5CF; }
+.month__banner--sep { background: var(--banana-soft); }
+.month__banner--oct {
+  background: var(--coral);
+  color: var(--cream);
 }
+.month__banner--oct .month__name,
+.month__banner--oct .month__sub,
+.month__banner--oct .month__count { color: var(--cream); }
+.month__banner--oct .month__count { border-color: var(--cream); }
 .month__name {
   font-family: var(--font-chunk);
   font-size: clamp(1.4rem, 2.5vw, 2rem);
