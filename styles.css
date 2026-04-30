@@ -1393,6 +1393,43 @@ button { font: inherit; cursor: pointer; }
   vertical-align: -5px;
 }
 
+/* Toggleable owner buttons (rendered by JS inside .deliv__owners) */
+button.ow {
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  font-family: var(--font-chunk);
+  font-weight: 400;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+button.ow:hover { transform: scale(1.12); }
+button.ow:active { transform: scale(0.95); }
+button.ow:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.ow.is-on { opacity: 1; }
+.ow.is-off,
+.ow.is-off.ow--v,
+.ow.is-off.ow--j,
+.ow.is-off.ow--f {
+  background: transparent;
+  color: var(--ink-soft);
+  border-style: dashed;
+  border-color: var(--ink-soft);
+  opacity: 0.45;
+}
+.ow.is-off:hover {
+  opacity: 0.85;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.deliv__owners {
+  gap: 0.3rem;
+}
+
 /* ============================================
    MANIFIESTO DE CARGA
    ============================================ */

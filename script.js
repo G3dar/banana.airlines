@@ -50,6 +50,66 @@
     });
   });
 
+  // === OWNER ASSIGNMENT (V / J / F toggle buttons per deliverable) ===
+  const OWNERS_KEY = 'banana-airlines-owners-v1';
+  const ALL_OWNERS = ['v', 'j', 'f'];
+
+  const loadOwners = () => {
+    try { return JSON.parse(localStorage.getItem(OWNERS_KEY) || '{}'); }
+    catch { return {}; }
+  };
+  const saveOwners = (s) => localStorage.setItem(OWNERS_KEY, JSON.stringify(s));
+
+  const ownerStore = loadOwners();
+
+  document.querySelectorAll('.deliv__owners').forEach(container => {
+    const item = container.closest('.deliverable');
+    const itemId = item ? item.dataset.id : null;
+
+    // Defaults from existing static markup
+    const defaults = new Set();
+    Array.from(container.children).forEach(child => {
+      const m = (child.className || '').match(/ow--([vjf])/);
+      if (m) defaults.add(m[1]);
+    });
+
+    const stored = itemId ? ownerStore[itemId] : null;
+
+    container.innerHTML = '';
+    ALL_OWNERS.forEach(owner => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `ow ow--${owner}`;
+      btn.textContent = owner.toUpperCase();
+      btn.dataset.owner = owner;
+      if (itemId) btn.dataset.itemId = itemId;
+      btn.setAttribute('aria-label', `Asignar ${owner.toUpperCase()}`);
+
+      const isOn = stored
+        ? !!stored[owner]
+        : defaults.has(owner);
+      btn.classList.add(isOn ? 'is-on' : 'is-off');
+      btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const nowOn = btn.classList.contains('is-off');
+        btn.classList.toggle('is-on', nowOn);
+        btn.classList.toggle('is-off', !nowOn);
+        btn.setAttribute('aria-pressed', nowOn ? 'true' : 'false');
+
+        if (itemId) {
+          const all = loadOwners();
+          if (!all[itemId]) all[itemId] = {};
+          all[itemId][owner] = nowOn;
+          saveOwners(all);
+        }
+      });
+
+      container.appendChild(btn);
+    });
+  });
+
   // Reveal on scroll
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
