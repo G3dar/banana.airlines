@@ -51,6 +51,7 @@
   });
 
   // === OWNER ASSIGNMENT (V / J / F toggle buttons per deliverable) ===
+  // Lu (L) está en el equipo pero coordina, no se asigna a tareas.
   const OWNERS_KEY = 'banana-airlines-owners-v1';
   const ALL_OWNERS = ['v', 'j', 'f'];
 
@@ -128,5 +129,5 @@
 
   // Tiny easter egg: console boarding announcement
   console.log('%c BANANA AIRLINES ', 'background:#F5C518;color:#1A1A1F;font-weight:700;letter-spacing:2px;padding:4px 10px;');
-  console.log('%c Vuelo BA·2026 · destino STEAM · embarque 01 JUN 2026 ', 'color:#D94B3E;font-style:italic;');
+  console.log('%c Vuelo BA·2026 · destino STEAM · despegue 01 JUL 2026 (página interna 01 JUN) ', 'color:#D94B3E;font-style:italic;');
 })();

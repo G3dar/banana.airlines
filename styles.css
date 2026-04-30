@@ -41,6 +41,7 @@
   --ow-v: var(--coral);
   --ow-j: var(--sky-deep);
   --ow-f: var(--palm);
+  --ow-l: var(--banana-deep);
 
   /* Type */
   --font-display: "Stardos Stencil", "Bowlby One", Impact, sans-serif;
@@ -516,6 +517,7 @@ button { font: inherit; cursor: pointer; }
 }
 
 /* Big milestones — shared base */
+.stop--ready .stop__dot,
 .stop--launch .stop__dot,
 .stop--lock .stop__dot,
 .stop--fest .stop__dot {
@@ -526,6 +528,7 @@ button { font: inherit; cursor: pointer; }
   align-items: center;
   justify-content: center;
 }
+.stop--ready .stop__dot svg,
 .stop--launch .stop__dot svg,
 .stop--lock .stop__dot svg,
 .stop--fest .stop__dot svg {
@@ -533,6 +536,7 @@ button { font: inherit; cursor: pointer; }
   height: auto;
   display: block;
 }
+.stop--ready .stop__date,
 .stop--launch .stop__date,
 .stop--lock .stop__date,
 .stop--fest .stop__date {
@@ -542,6 +546,7 @@ button { font: inherit; cursor: pointer; }
   font-weight: 500;
   letter-spacing: 0.18em;
 }
+.stop--ready .stop__label,
 .stop--launch .stop__label,
 .stop--lock .stop__label,
 .stop--fest .stop__label {
@@ -549,6 +554,7 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+.stop--ready .stop__sub,
 .stop--launch .stop__sub,
 .stop--lock .stop__sub,
 .stop--fest .stop__sub {
@@ -561,7 +567,27 @@ button { font: inherit; cursor: pointer; }
   text-transform: uppercase;
 }
 
-/* Despegue (Jun 1) — banana */
+/* Página interna (Jun 1) — sky / stamp */
+.stop--ready .stop__dot {
+  width: 64px;
+  height: 64px;
+  background: var(--sky-soft);
+  border-width: 3px;
+  box-shadow:
+    0 0 0 5px rgba(91, 155, 196, 0.20),
+    4px 4px 0 var(--sky-deep);
+  transform: rotate(-6deg);
+}
+.stop--ready .stop__dot svg { width: 38px; }
+.stop--ready .stop__date {
+  background: var(--sky-soft);
+  color: var(--ink);
+}
+.stop--ready .stop__label {
+  color: var(--sky-deep);
+}
+
+/* Despegue (Jul 1) — banana */
 .stop--launch .stop__dot {
   background: var(--banana);
   box-shadow:
@@ -674,12 +700,15 @@ button { font: inherit; cursor: pointer; }
     max-width: none;
   }
 
+  .stop--ready .stop__dot,
   .stop--launch .stop__dot,
   .stop--lock .stop__dot,
   .stop--fest .stop__dot {
     width: 44px;
     height: 44px;
   }
+  .stop--ready .stop__dot { width: 50px; height: 50px; }
+  .stop--ready .stop__dot svg { width: 30px; }
   .stop--launch .stop__dot svg,
   .stop--lock .stop__dot svg,
   .stop--fest .stop__dot svg { width: 24px; }
@@ -770,8 +799,11 @@ button { font: inherit; cursor: pointer; }
    ============================================ */
 .crew__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.85rem, 2vw, 1.6rem);
+}
+@media (max-width: 1080px) {
+  .crew__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 .crew-card {
@@ -795,6 +827,7 @@ button { font: inherit; cursor: pointer; }
 .crew-card--v { background: linear-gradient(180deg, #FCE3DF 0%, var(--paper) 35%); }
 .crew-card--j { background: linear-gradient(180deg, #DDEAF4 0%, var(--paper) 35%); }
 .crew-card--f { background: linear-gradient(180deg, #D6E5CF 0%, var(--paper) 35%); }
+.crew-card--l { background: linear-gradient(180deg, #FCEFB7 0%, var(--paper) 35%); }
 
 .crew-card__top {
   display: flex;
@@ -1386,6 +1419,7 @@ button { font: inherit; cursor: pointer; }
 .ow--v { background: var(--ow-v); }
 .ow--j { background: var(--ow-j); }
 .ow--f { background: var(--ow-f); }
+.ow--l { background: var(--ow-l); }
 .ow.inline {
   width: 22px; height: 22px;
   font-size: 0.7rem;
@@ -1414,7 +1448,8 @@ button.ow:focus-visible {
 .ow.is-off,
 .ow.is-off.ow--v,
 .ow.is-off.ow--j,
-.ow.is-off.ow--f {
+.ow.is-off.ow--f,
+.ow.is-off.ow--l {
   background: transparent;
   color: var(--ink-soft);
   border-style: dashed;
