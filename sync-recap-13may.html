@@ -183,34 +183,41 @@
 
   /* ── Recap hero (dark) ── */
   .recap-hero {
-    background: var(--dark);
+    background: #1A1A1F;
     color: #fff;
     padding: 56px 24px 48px;
     text-align: center;
-    border-bottom: 3px solid var(--yellow);
+    border-bottom: 3px solid #F5C518;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .recap-hero__eyebrow {
-    font-family: var(--font-mono);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     letter-spacing: .16em;
     text-transform: uppercase;
-    color: var(--yellow);
+    color: #F5C518;
     opacity: .85;
     margin-bottom: 20px;
   }
   .recap-hero__title {
-    font-family: var(--font-display);
+    font-family: 'Anton', 'Bungee', sans-serif;
     font-size: clamp(44px, 9vw, 88px);
     line-height: .9;
     margin-bottom: 20px;
+    color: #fff;
   }
-  .recap-hero__title em { color: var(--yellow); font-style: normal; }
+  .recap-hero__title em { color: #F5C518; font-style: normal; }
   .recap-hero__meta {
-    font-family: var(--font-serif);
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 15px;
     opacity: .6;
     font-style: italic;
     margin-bottom: 28px;
+    color: #fff;
   }
   .recap-hero__crew {
     display: flex;
@@ -849,7 +856,6 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
 <script>
   (function () {
     var STORE = 'ba_s13_';
