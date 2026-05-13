@@ -4,8 +4,81 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Banana Airways · Sync Recap 13·may·26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
+  /* ── Font overrides — match weekly.html ── */
+  :root {
+    --font-display: 'Anton', 'Bungee', sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+    --font-serif:   'Space Grotesk', system-ui, sans-serif;
+    --font-stencil: 'Bungee Shade', 'Bungee', sans-serif;
+  }
+  body { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+  /* ── Topbar ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 26px;
+    background: rgba(11,26,46,.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(245,197,24,.2);
+  }
+  .topbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .topbar__b {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; height: 34px;
+    background: var(--yellow);
+    color: #0B1A2E;
+    border-radius: 50%;
+    font-family: 'Bungee', sans-serif;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .topbar__txt {
+    font-family: 'Bungee', sans-serif;
+    font-size: 11px;
+    letter-spacing: .12em;
+    line-height: 1.1;
+    color: #F4F1E8;
+  }
+  .topbar__nav {
+    margin-left: auto;
+    display: flex;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+  .topbar__nav a {
+    color: rgba(244,241,232,.6);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .topbar__nav a:hover { color: var(--yellow); }
+
+  /* ── Body text — Space Grotesk ── */
+  .dcard__body, .spec-card__sub, .prop-card__desc,
+  .strategy-card__lead, .ptask__text, .section-intro,
+  .recap-hero__meta, .risks__list li {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
   /* ── Recap hero (dark) ── */
   .recap-hero {
     background: var(--dark);
@@ -351,11 +424,8 @@
   }
   .t-dark { color: var(--dark); }
   .t-retro {
-    font-family: var(--font-stencil);
+    font-family: 'Bungee Shade', sans-serif;
     color: #c8a440;
-    -webkit-text-stroke: 5px var(--cream);
-    paint-order: stroke fill;
-    text-shadow: 3px 3px 0 rgba(120,80,0,.3), 5px 5px 0 rgba(120,80,0,.15);
   }
   .section__rule { display: none; }
 </style>
@@ -364,36 +434,19 @@
 
 <div class="grain" aria-hidden="true"></div>
 
-<!-- ===== TICKER ===== -->
-<header class="ticker" role="banner">
-  <div class="ticker__scroll">
-    <div class="ticker__track">
-      <span class="ticker__item"><b>SYNC</b> 13·MAY·26</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>RECAP</b> DE REUNIÓN</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>BANANA AIRWAYS</b> — NUEVO NOMBRE</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item">CAMEL ARRANCA MODELADO <b>MAÑANA</b></span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>REVEAL TRAILER</b> 01·JUL·26</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item">LU · VALENTÍN · FEDERICO · JORGE · SANTIAGO</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>SYNC</b> 13·MAY·26</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>RECAP</b> DE REUNIÓN</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>BANANA AIRWAYS</b> — NUEVO NOMBRE</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item">CAMEL ARRANCA MODELADO <b>MAÑANA</b></span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item"><b>REVEAL TRAILER</b> 01·JUL·26</span>
-      <span class="ticker__sep">✦</span>
-      <span class="ticker__item">LU · VALENTÍN · FEDERICO · JORGE · SANTIAGO</span>
-      <span class="ticker__sep">✦</span>
-    </div>
-  </div>
+<!-- ===== TOPBAR ===== -->
+<header class="topbar">
+  <a class="topbar__brand" href="index.html" title="Volver al portal">
+    <span class="topbar__b">B</span>
+    <span class="topbar__txt">BANANA<br>AIRWAYS</span>
+  </a>
+  <nav class="topbar__nav">
+    <a href="#acuerdos">01</a>
+    <a href="#specs">02</a>
+    <a href="#props">03</a>
+    <a href="#trailer">04</a>
+    <a href="#pasos">05</a>
+  </nav>
 </header>
 
 <!-- ===== HERO ===== -->
