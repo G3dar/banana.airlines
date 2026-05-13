@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banana Airways · Sync Recap 13·may·26</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ── Recap hero (dark) ── */
+  .recap-hero {
+    background: var(--dark);
+    color: #fff;
+    padding: 56px 24px 48px;
+    text-align: center;
+    border-bottom: 3px solid var(--yellow);
+  }
+  .recap-hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    opacity: .85;
+    margin-bottom: 20px;
+  }
+  .recap-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 9vw, 88px);
+    line-height: .9;
+    margin-bottom: 20px;
+  }
+  .recap-hero__title em { color: var(--yellow); font-style: normal; }
+  .recap-hero__meta {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    opacity: .6;
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .recap-hero__crew {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .recap-hero__crew-extra {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    color: #fff;
+    opacity: .35;
+    margin-left: 4px;
+  }
+
+  /* ── Decision cards ── */
+  .decisions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .dcard {
+    border: 2px solid var(--dark);
+    border-radius: var(--pass-radius);
+    padding: 16px 15px;
+  }
+  .dcard--change  { border-left: 4px solid var(--red);      background: #fff8f7; }
+  .dcard--confirm { border-left: 4px solid var(--green-dk); background: #f3f9f3; }
+  .dcard--note    { border-left: 4px solid var(--yellow);   background: #fffdf0; }
+  .dcard__tag {
+    font-family: var(--font-stencil);
+    font-size: 8px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    display: block;
+  }
+  .dcard--change  .dcard__tag { color: var(--red); }
+  .dcard--confirm .dcard__tag { color: var(--green-dk); }
+  .dcard--note    .dcard__tag { color: #9a7a00; }
+  .dcard__body {
+    font-family: var(--font-serif);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .dcard__body b { font-weight: 700; }
+
+  /* ── Spec grid ── */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .spec-card {
+    border: 2.5px solid var(--dark);
+    border-radius: var(--pass-radius);
+    padding: 16px 15px;
+    background: var(--cream);
+  }
+  .spec-card__label {
+    font-family: var(--font-stencil);
+    font-size: 8px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    opacity: .45;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .spec-card__val {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--dark);
+  }
+  .spec-card__val--yellow { color: var(--yellow); background: var(--dark); padding: 2px 6px; border-radius: 4px; display: inline-block; }
+  .spec-card__sub {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    opacity: .6;
+    line-height: 1.45;
+  }
+
+  /* ── Props del teaser ── */
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .prop-card {
+    border: 2.5px solid var(--dark);
+    border-radius: var(--pass-radius);
+    padding: 18px 14px;
+    background: var(--dark);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .prop-card__priority {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .1em;
+    opacity: .4;
+  }
+  .prop-card__name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.05;
+    color: var(--yellow);
+  }
+  .prop-card__desc {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: .65;
+    flex: 1;
+  }
+  .prop-card__why {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .06em;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 20px;
+    padding: 2px 8px;
+    color: var(--yellow);
+    width: fit-content;
+    opacity: .8;
+    margin-top: 4px;
+  }
+
+  /* ── Trailer strategy ── */
+  .strategy-card {
+    border: 2.5px solid var(--dark);
+    border-radius: var(--pass-radius);
+    padding: 24px 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .strategy-stamp {
+    position: absolute;
+    top: 18px; right: 18px;
+    font-family: var(--font-stencil);
+    font-size: 9px;
+    letter-spacing: .18em;
+    color: var(--green-dk);
+    border: 1.5px solid var(--green-dk);
+    padding: 2px 7px;
+    border-radius: 3px;
+    opacity: .55;
+    transform: rotate(-2deg);
+  }
+  .strategy-card__lead {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .strategy-card__lead strong { font-weight: 700; }
+  .strategy-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── Person task cards ── */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .pcard {
+    border: 2.5px solid var(--dark);
+    border-radius: var(--pass-radius);
+    overflow: hidden;
+  }
+  .pcard__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--dark);
+  }
+  .pcard--j   .pcard__head { background: #FFF8E6; }
+  .pcard--l   .pcard__head { background: #FEF0EE; }
+  .pcard--all .pcard__head { background: var(--cream-dark); }
+  .pcard__name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1;
+  }
+  .pcard__role {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .5;
+  }
+  .pcard__week {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .08em;
+    opacity: .4;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .pcard__tasks {
+    padding: 10px 12px;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .pcard__week-label {
+    font-family: var(--font-stencil);
+    font-size: 8px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    opacity: .35;
+    padding: 6px 7px 2px;
+  }
+  .ptask {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 7px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background .1s;
+    user-select: none;
+  }
+  .ptask:hover { background: rgba(26,26,31,.05); }
+  .ptask__dot {
+    flex-shrink: 0;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    border: 2px solid rgba(26,26,31,.35);
+    margin-top: 3px;
+    transition: background .12s, border-color .12s;
+  }
+  .ptask__text {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    line-height: 1.45;
+    flex: 1;
+  }
+  .ptask__tag {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: .05em;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .ptask__tag--deadline { background: #ffcdd2; color: #8b0000; }
+  .ptask__tag--urgent   { background: #ffe082; color: #5a4000; }
+  .ptask__tag--next     { background: var(--cream-dark); color: var(--dark); opacity: .7; }
+  .ptask.done .ptask__dot  { background: var(--green-dk); border-color: var(--green-dk); }
+  .ptask.done .ptask__text { text-decoration: line-through; opacity: .35; }
+
+  .section-intro {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    opacity: .72;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== TICKER ===== -->
+<header class="ticker" role="banner">
+  <div class="ticker__scroll">
+    <div class="ticker__track">
+      <span class="ticker__item"><b>SYNC</b> 13·MAY·26</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>RECAP</b> DE REUNIÓN</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>BANANA AIRWAYS</b> — NUEVO NOMBRE</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item">CAMEL ARRANCA MODELADO <b>MAÑANA</b></span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>REVEAL TRAILER</b> 01·JUL·26</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item">LU · VALENTÍN · FEDERICO · JORGE · SANTIAGO</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>SYNC</b> 13·MAY·26</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>RECAP</b> DE REUNIÓN</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>BANANA AIRWAYS</b> — NUEVO NOMBRE</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item">CAMEL ARRANCA MODELADO <b>MAÑANA</b></span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item"><b>REVEAL TRAILER</b> 01·JUL·26</span>
+      <span class="ticker__sep">✦</span>
+      <span class="ticker__item">LU · VALENTÍN · FEDERICO · JORGE · SANTIAGO</span>
+      <span class="ticker__sep">✦</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="recap-hero">
+  <p class="recap-hero__eyebrow">Banana Airways · Sync · 13 Mayo 2026 · 16:00 GMT−3</p>
+  <h1 class="recap-hero__title">SYNC<br><em>RECAP</em></h1>
+  <p class="recap-hero__meta">Specs técnicas · diseño de personaje y avión · props del teaser</p>
+  <div class="recap-hero__crew">
+    <span class="ow ow--l">L</span>
+    <span class="ow ow--v">V</span>
+    <span class="ow ow--j">J</span>
+    <span class="ow ow--f">F</span>
+    <span class="recap-hero__crew-extra">+ Santiago</span>
+  </div>
+</section>
+
+<!-- ===== 01 ACUERDOS ===== -->
+<section class="section" id="acuerdos">
+  <header class="section__head">
+    <span class="section__num">01</span>
+    <h2 class="section__title">Acuerdos clave</h2>
+    <span class="section__rule"></span>
+    <span class="section__nameplate">decisions</span>
+  </header>
+  <div class="decisions-grid">
+
+    <div class="dcard dcard--change">
+      <span class="dcard__tag">Cambio de nombre</span>
+      <p class="dcard__body"><b>Banana Airways</b> es el nombre oficial del proyecto. Reemplaza a "Banana Air". Más claro, mejor tono.</p>
+    </div>
+
+    <div class="dcard dcard--confirm">
+      <span class="dcard__tag">Confirmado</span>
+      <p class="dcard__body"><b>Camel arranca mañana</b> con el modelado del personaje. Jorge le pasa el brief técnico esta tarde en la llamada de las 6 PM.</p>
+    </div>
+
+    <div class="dcard dcard--confirm">
+      <span class="dcard__tag">Confirmado</span>
+      <p class="dcard__body">Referencia estética del avión: <b>Lockheed Constellation</b>. Avión de época, turbinas visibles desde el interior. Realista pero no exacto.</p>
+    </div>
+
+    <div class="dcard dcard--confirm">
+      <span class="dcard__tag">Solución técnica</span>
+      <p class="dcard__body">Las físicas del avión se resuelven con <b>Unity 6 Physics Scenes</b>: interior y exterior como escenas separadas. Más estable, sin conflictos de colisión.</p>
+    </div>
+
+    <div class="dcard dcard--note">
+      <span class="dcard__tag">Decisión de producción</span>
+      <p class="dcard__body">El rig <b>no necesita grip por objeto</b>. Con mano cerrada y el objeto pegado alcanza. Simplifica el trabajo del rigger y el modelador.</p>
+    </div>
+
+    <div class="dcard dcard--note">
+      <span class="dcard__tag">Próxima semana</span>
+      <p class="dcard__body">Lu contacta a <b>Julieta</b> (rigger) para validar los requerimientos del modelado antes de que Camel avance demasiado.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 02 ESPECIFICACIONES TÉCNICAS ===== -->
+<section class="section" id="specs">
+  <header class="section__head">
+    <span class="section__num">02</span>
+    <h2 class="section__title">Especificaciones técnicas</h2>
+    <span class="section__rule"></span>
+    <span class="section__nameplate">character + plane</span>
+  </header>
+  <p class="section-intro">Definiciones cerradas hoy. Base para el brief a Camel y el trabajo de modelado.</p>
+
+  <div class="spec-grid">
+
+    <div class="spec-card">
+      <span class="spec-card__label">Polígonos por personaje</span>
+      <div class="spec-card__val">10k – 30k</div>
+      <p class="spec-card__sub">Alta calidad visual sin afectar performance. Jorge confirma el tope exacto antes de dar el brief.</p>
+    </div>
+
+    <div class="spec-card">
+      <span class="spec-card__label">Tipo de rig</span>
+      <div class="spec-card__val" style="font-size:16px;line-height:1.2;">Humanoid<br>+ dedos</div>
+      <p class="spec-card__sub">Rig avanzado para Unity. Cabeza con movimiento independiente para mejorar animaciones.</p>
+    </div>
+
+    <div class="spec-card">
+      <span class="spec-card__label">Accesorios</span>
+      <div class="spec-card__val" style="font-size:16px;">Modulares</div>
+      <p class="spec-card__sub">Crestas, peinados y extras se activan / desactivan desde el rig. El modelo base queda limpio.</p>
+    </div>
+
+    <div class="spec-card">
+      <span class="spec-card__label">Sistema de agarre</span>
+      <div class="spec-card__val" style="font-size:15px;">Mano cerrada</div>
+      <p class="spec-card__sub">El objeto se ancla a la mano cerrada. Sin sistema complejo de grip por objeto.</p>
+    </div>
+
+    <div class="spec-card">
+      <span class="spec-card__label">Interior del avión</span>
+      <div class="spec-card__val" style="font-size:15px;">Pasillo amplio</div>
+      <p class="spec-card__sub">Pasillo central más ancho. Espacios de jugabilidad adicionales. Basado en el Lockheed Constellation.</p>
+    </div>
+
+    <div class="spec-card">
+      <span class="spec-card__label">Elementos destructibles</span>
+      <div class="spec-card__val" style="font-size:15px;">3 aberturas</div>
+      <p class="spec-card__sub">3 puntos de ruptura predefinidos por lado del avión. Elementos removibles para las mecánicas de caos.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 03 PROPS DEL TEASER ===== -->
+<section class="section" id="props">
+  <header class="section__head">
+    <span class="section__num">03</span>
+    <h2 class="section__title">Props del teaser</h2>
+    <span class="section__rule"></span>
+    <span class="section__nameplate">chaos props</span>
+  </header>
+  <p class="section-intro">Los tres props confirmados como prioritarios para capturar el teaser trailer. En este orden.</p>
+  <div class="props-grid">
+
+    <div class="prop-card">
+      <div class="prop-card__priority">01 · PROP PRIORITARIO</div>
+      <div class="prop-card__name">Carrito de servicio</div>
+      <div class="prop-card__desc">Mecánica central del juego. Moverse por el pasillo con el carrito es el corazón del gameplay loop visible en el trailer.</div>
+      <span class="prop-card__why">mecánica core</span>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-card__priority">02 · PROP PRIORITARIO</div>
+      <div class="prop-card__name">Maleta bomba</div>
+      <div class="prop-card__desc">Al abrirse desencadena caos general. Momento de ruptura que cambia el estado del vuelo. Alto impacto visual.</div>
+      <span class="prop-card__why">momento de caos</span>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-card__priority">03 · PROP PRIORITARIO</div>
+      <div class="prop-card__name">Bandejas de comida</div>
+      <div class="prop-card__desc">Soporte a la mecánica de pedidos de pasajeros. Café, comida, etc. Base del loop de atención a bordo.</div>
+      <span class="prop-card__why">gameplay loop</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 04 ESTRATEGIA DEL TRAILER ===== -->
+<section class="section" id="trailer">
+  <header class="section__head">
+    <span class="section__num">04</span>
+    <h2 class="section__title">Estrategia del trailer</h2>
+    <span class="section__rule"></span>
+    <span class="section__nameplate">marketing</span>
+  </header>
+  <div class="strategy-card">
+    <span class="strategy-stamp">CONFIRMADO</span>
+    <p class="strategy-card__lead">El trailer se construye con <strong>gameplay real capturado del prototipo</strong>, no con cinemáticas altamente producidas. El equipo revisó trailers de referencia de otros juegos indie y valoró la autenticidad del footage real sobre la producción pulida.</p>
+    <div class="strategy-pills">
+      <span class="chip chip--alert">gameplay real</span>
+      <span class="chip">no cinemáticas</span>
+      <span class="chip">caos visible</span>
+      <span class="chip">footage del prototipo</span>
+      <span class="chip">teaser corto</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 PRÓXIMOS PASOS ===== -->
+<section class="section" id="pasos">
+  <header class="section__head">
+    <span class="section__num">05</span>
+    <h2 class="section__title">Próximos pasos</h2>
+    <span class="section__rule"></span>
+    <span class="section__nameplate">who · what · when</span>
+  </header>
+  <p class="section-intro">Click en cada tarea para marcarla como hecha. Estado guardado en el navegador.</p>
+  <div class="person-grid">
+
+    <!-- JORGE -->
+    <div class="pcard pcard--j">
+      <div class="pcard__head">
+        <span class="ow ow--j">J</span>
+        <div>
+          <div class="pcard__name">Jorge</div>
+          <div class="pcard__role">Director de arte</div>
+        </div>
+        <span class="pcard__week">S02</span>
+      </div>
+      <div class="pcard__tasks">
+        <div class="pcard__week-label">Esta semana — S02</div>
+        <div class="ptask" data-rid="sj-1">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Llamada con Camel a las 6 PM — brief técnico del personaje</span>
+          <span class="ptask__tag ptask__tag--deadline">HOY</span>
+        </div>
+        <div class="ptask" data-rid="sj-2">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Confirmar tope de polígonos para el brief de modelado</span>
+          <span class="ptask__tag ptask__tag--deadline">HOY</span>
+        </div>
+        <div class="ptask" data-rid="sj-3">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Seleccionar y compartir imágenes de referencia de personajes por WhatsApp</span>
+          <span class="ptask__tag ptask__tag--urgent">S02</span>
+        </div>
+        <div class="ptask" data-rid="sj-4">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Diseño del interior del avión — pasillo más amplio, espacios de gameplay</span>
+          <span class="ptask__tag ptask__tag--urgent">S02</span>
+        </div>
+        <div class="ptask" data-rid="sj-5">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Generar nuevas imágenes del interior (Air Banana / Banana Airways) para cerrar el diseño</span>
+          <span class="ptask__tag ptask__tag--urgent">S02</span>
+        </div>
+        <div class="ptask" data-rid="sj-6">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Agregar videos de referencia para el teaser al board</span>
+          <span class="ptask__tag ptask__tag--next">S02</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LU -->
+    <div class="pcard pcard--l">
+      <div class="pcard__head">
+        <span class="ow ow--l">L</span>
+        <div>
+          <div class="pcard__name">Lu</div>
+          <div class="pcard__role">Producción</div>
+        </div>
+        <span class="pcard__week">S02–S03</span>
+      </div>
+      <div class="pcard__tasks">
+        <div class="pcard__week-label">Esta semana — S02</div>
+        <div class="ptask" data-rid="sl-1">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Contactar a Julieta (rigger) — enviar audios e imágenes para validar reqs del modelado</span>
+          <span class="ptask__tag ptask__tag--urgent">S02</span>
+        </div>
+        <div class="pcard__week-label" style="margin-top:6px">Próxima semana — S03</div>
+        <div class="ptask" data-rid="sl-2">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Documentar prioridades de diseño para el teaser (semana 3)</span>
+          <span class="ptask__tag ptask__tag--next">S03</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODOS -->
+    <div class="pcard pcard--all">
+      <div class="pcard__head">
+        <span class="ow ow--j inline" style="width:22px;height:22px;font-size:11px;">J</span>
+        <span class="ow ow--v inline" style="width:22px;height:22px;font-size:11px;">V</span>
+        <span class="ow ow--f inline" style="width:22px;height:22px;font-size:11px;">F</span>
+        <div>
+          <div class="pcard__name">Todo el equipo</div>
+          <div class="pcard__role">Acción colectiva</div>
+        </div>
+        <span class="pcard__week">S02</span>
+      </div>
+      <div class="pcard__tasks">
+        <div class="pcard__week-label">Esta semana y la próxima</div>
+        <div class="ptask" data-rid="sa-1">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Cerrar requerimientos pendientes y enviar personajes de referencia para producción</span>
+          <span class="ptask__tag ptask__tag--urgent">S02</span>
+        </div>
+        <div class="ptask" data-rid="sa-2">
+          <span class="ptask__dot"></span>
+          <span class="ptask__text">Detallar GDD — comenzar versión 1 completa</span>
+          <span class="ptask__tag ptask__tag--next">S02–S03</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner">
+    <div class="footer__col">
+      <p class="footer__line">Banana Airways · Sync Recap</p>
+      <p class="footer__small">Notas de la reunión del 13 de mayo de 2026.</p>
+    </div>
+    <div class="footer__col footer__col--center">
+      <span class="footer__sig">RECAP 13·MAY·26</span>
+    </div>
+    <div class="footer__col footer__col--right">
+      <p class="footer__line">Generado</p>
+      <p class="footer__date">13 · MAY · 2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  (function () {
+    var STORE = 'ba_s13_';
+    document.querySelectorAll('.ptask[data-rid]').forEach(function (el) {
+      var id = el.dataset.rid;
+      if (localStorage.getItem(STORE + id) === 'done') el.classList.add('done');
+      el.addEventListener('click', function () {
+        el.classList.toggle('done');
+        localStorage.setItem(STORE + id, el.classList.contains('done') ? 'done' : '');
+      });
+    });
+  }());
+</script>
+</body>
+</html>
