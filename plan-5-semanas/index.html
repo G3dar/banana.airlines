@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banana Airways · Plan de Distribución · 5 Semanas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16233f; --navy-2:#1e3157;
+    --gold:#e3b53a; --gold-lt:#f4ce5e; --gold-dk:#c8992a;
+    --cream:#f5efe1; --ink:#20242c; --red:#d24a3f;
+    --steam-bg:#ded6ef;   --steam-bd:#b9a8de;  --steam-tx:#463676;
+    --trailer-bg:#f8dfc4; --trailer-bd:#ebbf93; --trailer-tx:#82521d;
+    --logo-bg:#d8e8c9;    --logo-bd:#a9ce8c;   --logo-tx:#456029;
+    --mkt-bg:#f3d2d2;     --mkt-bd:#e2a8a8;    --mkt-tx:#8e3b3b;
+    --mile-bg:#c8daf1;    --mile-bd:#93b4de;   --mile-tx:#274b7a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;}
+  body{
+    font-family:'Archivo',system-ui,sans-serif;color:var(--ink);
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 92% 4%, rgba(227,181,58,.10), transparent 34%),
+      radial-gradient(circle at 3% 98%, rgba(30,49,87,.06), transparent 36%);
+    min-height:100vh;
+  }
+  .page{width:100%;max-width:2200px;margin:0 auto;}
+
+  /* ================= HEADER ================= */
+  header{
+    background:linear-gradient(115deg,#0f1a30 0%, var(--navy) 55%, var(--navy-2) 100%);
+    color:#fff;padding:1.5rem clamp(1.5rem,3vw,3.5rem) 1.4rem;
+    display:flex;align-items:center;gap:clamp(1.2rem,2.5vw,3rem);flex-wrap:wrap;
+    border-bottom:6px solid var(--gold);
+  }
+  .logo-wrap{flex:0 0 auto;display:flex;align-items:center;padding-right:clamp(1rem,2vw,2.4rem);border-right:1px solid rgba(255,255,255,.16);}
+  .logo-wrap img{height:clamp(56px,5.5vw,82px);display:block;}
+  .head-txt{flex:1 1 320px;}
+  .tag{display:inline-block;background:var(--gold);color:#1a1200;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;padding:.28rem .7rem;border-radius:4px;margin-bottom:.55rem;}
+  h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(1.9rem,3.4vw,3.2rem);line-height:.92;text-transform:uppercase;letter-spacing:.01em;}
+  h1 em{font-style:normal;color:var(--gold-lt);}
+  .subhead{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:clamp(.8rem,1.1vw,1.05rem);letter-spacing:.14em;text-transform:uppercase;color:#cfd8e8;margin-top:.5rem;}
+
+  /* ================= MAIN ================= */
+  main{padding:clamp(1.1rem,2.2vw,2.2rem) clamp(1.1rem,3vw,3.2rem) 2rem;}
+
+  /* ================= GANTT ================= */
+  .gantt{
+    display:grid;
+    grid-template-columns:132px
+      minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.5fr) minmax(0,.5fr)
+      minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.5fr) minmax(0,.5fr)
+      minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.5fr) minmax(0,.5fr)
+      minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.5fr) minmax(0,.5fr)
+      minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);
+    gap:5px 3px;position:relative;align-items:stretch;
+  }
+  .gantt > *{position:relative;z-index:1;}
+
+  .weekband{z-index:0;}
+  .weekband.alt{background:rgba(30,49,87,.04);}
+  /* vertical day grid + week separators */
+  .gcol{grid-row:2/15;border-left:1px solid rgba(30,49,87,.10);z-index:0;pointer-events:none;}
+  .gcol.wstart{border-left:2.5px solid rgba(30,49,87,.34);}
+  .gcol.gend{border-right:2.5px solid rgba(30,49,87,.34);}
+  /* horizontal separators entre sectores */
+  .hsep{grid-column:1/35;align-self:start;height:0;border-top:1px solid rgba(30,49,87,.16);z-index:0;}
+  /* columnas de fin de semana (sáb/dom) */
+  .wknd-col{grid-row:2/15;background:rgba(46,60,92,.08);z-index:0;}
+
+  .nowline{z-index:0;border-left:2px dashed var(--gold-dk);}
+  .nowtag{z-index:2;align-self:start;justify-self:center;background:var(--gold-dk);color:#fff;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.08rem .3rem;border-radius:3px;transform:translateY(-2px);}
+
+  /* week + day headers */
+  .wk{background:linear-gradient(160deg,var(--navy),var(--navy-2));color:#fff;border-radius:8px;padding:.5rem .75rem;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(227,181,58,.35);}
+  .wk .wn{font-family:'Anton',sans-serif;font-size:1.1rem;line-height:1;}
+  .wk .wr{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.7rem;color:#c7d2e6;text-transform:uppercase;letter-spacing:.05em;margin-top:.1rem;}
+  .wk .wg{margin-top:.35rem;align-self:flex-start;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.66rem;letter-spacing:.04em;padding:.12rem .45rem;border-radius:3px;background:var(--gold);color:#241800;text-transform:uppercase;}
+  .wk.pre .wg{background:rgba(255,255,255,.14);color:#c1cbdd;border:1px dashed rgba(255,255,255,.32);}
+
+  .day{grid-row:2;text-align:center;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.66rem;color:#5a5f68;padding:.18rem 0 .3rem;border-bottom:2px solid rgba(30,49,87,.14);align-self:end;}
+  .day .mo{display:block;font-size:.54rem;color:var(--gold-dk);font-weight:700;letter-spacing:.03em;}
+  .day .dow{display:block;font-size:.52rem;font-weight:700;color:#9aa1ac;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.05rem;}
+  .day.wk1{color:var(--navy);font-weight:700;font-size:.72rem;}
+  .day.wknd{color:#5f6b86;}
+  .day.wknd .dow{color:#8792ab;}
+  .day.today{color:#fff;background:var(--gold-dk);border-radius:4px 4px 0 0;font-weight:700;border-bottom:none;}
+  .day.today .mo,.day.today .dow{color:#fff;}
+
+  /* sector labels */
+  .slabel{border-radius:8px;color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.15rem;padding:.5rem .7rem;}
+  .slabel .sname{font-family:'Anton',sans-serif;font-size:1.02rem;line-height:.98;text-transform:uppercase;}
+  .slabel .snote{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.66rem;letter-spacing:.04em;opacity:.9;text-transform:uppercase;}
+  .sl-steam  {background:linear-gradient(160deg,#6a58a3,#463676);}
+  .sl-trailer{background:linear-gradient(160deg,#c07f37,#82521d);}
+  .sl-logo   {background:linear-gradient(160deg,#6f9a4c,#456029);}
+  .sl-mkt    {background:linear-gradient(160deg,#c05c5c,#8e3b3b);}
+  .sl-mile   {background:linear-gradient(160deg,#3c65a0,#274b7a);}
+
+  /* task bars */
+  .bar{border-radius:6px;border:1px solid;padding:.35rem .5rem;font-family:'Archivo',sans-serif;font-weight:600;font-size:.78rem;line-height:1.1;display:flex;align-items:center;min-height:30px;word-break:break-word;hyphens:auto;}
+  .c-steam  {background:var(--steam-bg);border-color:var(--steam-bd);color:var(--steam-tx);}
+  .c-trailer{background:var(--trailer-bg);border-color:var(--trailer-bd);color:var(--trailer-tx);}
+  .c-logo   {background:var(--logo-bg);border-color:var(--logo-bd);color:var(--logo-tx);}
+  .c-mkt    {background:var(--mkt-bg);border-color:var(--mkt-bd);color:var(--mkt-tx);}
+
+  /* milestones (día puntual) */
+  .mstone{border-radius:6px;border:1px solid;padding:.3rem .2rem;font-family:'Archivo',sans-serif;font-weight:700;font-size:.6rem;line-height:1.08;text-align:center;display:flex;align-items:center;justify-content:center;min-height:54px;word-break:break-word;hyphens:auto;background:var(--mile-bg);border-color:var(--mile-bd);color:var(--mile-tx);}
+  .mstone.final{background:var(--mile-tx);border-color:var(--mile-tx);color:#fff;}
+  .mstone.final::before{content:"★";display:block;color:var(--gold-lt);font-size:.7rem;margin-bottom:.1rem;}
+  .m20k{border-radius:8px;background:var(--red);border:1px solid #a5352c;color:#fff;font-family:'Anton',sans-serif;font-size:1.15rem;line-height:.95;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.4rem .2rem;}
+  .m20k small{display:block;font-family:'Archivo Narrow',sans-serif;font-size:.42rem;letter-spacing:.06em;font-weight:600;opacity:.95;margin-top:.25rem;}
+
+  /* goal bands (semanas 11-13) */
+  .goalband{border-radius:6px;padding:.35rem .5rem;text-align:center;background:linear-gradient(160deg,#f7dede,#f0caca);border:1px solid var(--mkt-bd);color:var(--mkt-tx);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;}
+  .goalband .g{font-family:'Anton',sans-serif;font-size:1.5rem;line-height:.88;}
+  .goalband .s{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;color:#9a4a4a;}
+  .goalband .c{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.64rem;color:#fff;background:var(--mkt-tx);border-radius:4px;padding:.08rem .4rem;margin-top:.15rem;}
+  .goalband.done .c{background:var(--navy);}
+  .goalband .c b{color:var(--gold-lt);}
+
+  /* ================= PLAYBOOK ================= */
+  .foot{margin-top:1.6rem;}
+  .playbook{background:#fff;border:1px solid #e7ddc7;border-left:8px solid var(--gold);border-radius:12px;padding:1.1rem 1.4rem;}
+  .playbook h3{font-family:'Anton',sans-serif;font-size:1.4rem;text-transform:uppercase;color:var(--navy);}
+  .playbook .h3sub{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:.9rem;}
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem 2rem;}
+  .pillar b{font-family:'Archivo',sans-serif;font-weight:800;font-size:.86rem;text-transform:uppercase;letter-spacing:.02em;color:var(--navy-2);display:block;margin-bottom:.15rem;}
+  .pillar span{font-family:'Archivo',sans-serif;font-weight:400;font-size:.82rem;line-height:1.3;color:#4a4f59;}
+
+  .bottombar{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-top:1.4rem;padding-top:1rem;border-top:2px solid rgba(30,49,87,.18);}
+  .legend{display:flex;flex-wrap:wrap;gap:.9rem;align-items:center;}
+  .legend .li{display:flex;align-items:center;gap:.4rem;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:#5a5f68;}
+  .legend .sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.15);}
+  .credit{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:#7a7f88;}
+  .credit b{color:var(--navy);}
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:1100px){
+    .gantt{overflow-x:auto;}
+    main{overflow-x:auto;}
+    .pillars{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ================= PRINT ================= */
+  @page{size:A4 landscape;margin:0;}
+  @media print{
+    html{zoom:.66;}
+    body{background:#fff;background-image:none;min-height:0;}
+    .page{width:1620px;max-width:none;}
+    header{padding:.9rem 1.4rem;border-bottom-width:4px;}
+    main{padding:.9rem 1.4rem .8rem;}
+    .gantt{gap:4px 2px;}
+    .bar{min-height:26px;}
+    .mstone{min-height:48px;}
+    .foot{margin-top:1rem;}
+    .bottombar{margin-top:1rem;}
+    .noprint{display:none!important;}
+  }
+  .hint{position:fixed;right:16px;bottom:16px;z-index:99;background:var(--navy);color:#fff;font-family:'Archivo',sans-serif;font-size:13px;padding:10px 15px;border-radius:9px;box-shadow:0 4px 16px rgba(0,0,0,.3);max-width:320px;line-height:1.4;}
+  .hint b{color:var(--gold-lt);}
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- ============ HEADER ============ -->
+  <header>
+    <div class="logo-wrap"><img src="logo.png" alt="Banana Airways"></div>
+    <div class="head-txt">
+      <span class="tag">Distribución · El foco real</span>
+      <h1>Plan de <em>distribución</em> · 5 semanas</h1>
+      <div class="subhead">Semanas 9 → 13 · 29 jun → 31 jul 2026 · 20.000 wishlists para fin de julio</div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN / GANTT ============ -->
+  <main>
+    <div class="gantt">
+      <!-- week bands (fondo) -->
+      <div class="weekband"     style="grid-row:3/15;grid-column:2/9"></div>
+      <div class="weekband alt" style="grid-row:3/15;grid-column:9/16"></div>
+      <div class="weekband"     style="grid-row:3/15;grid-column:16/23"></div>
+      <div class="weekband alt" style="grid-row:3/15;grid-column:23/30"></div>
+      <div class="weekband"     style="grid-row:3/15;grid-column:30/35"></div>
+      <!-- grilla vertical: 1 línea por día, separador fuerte al inicio de cada semana -->
+      <div class="gcol wstart" style="grid-column:2"></div>
+      <div class="gcol" style="grid-column:3"></div>
+      <div class="gcol" style="grid-column:4"></div>
+      <div class="gcol" style="grid-column:5"></div>
+      <div class="gcol" style="grid-column:6"></div>
+      <div class="gcol" style="grid-column:7"></div>
+      <div class="gcol" style="grid-column:8"></div>
+      <div class="gcol wstart" style="grid-column:9"></div>
+      <div class="gcol" style="grid-column:10"></div>
+      <div class="gcol" style="grid-column:11"></div>
+      <div class="gcol" style="grid-column:12"></div>
+      <div class="gcol" style="grid-column:13"></div>
+      <div class="gcol" style="grid-column:14"></div>
+      <div class="gcol" style="grid-column:15"></div>
+      <div class="gcol wstart" style="grid-column:16"></div>
+      <div class="gcol" style="grid-column:17"></div>
+      <div class="gcol" style="grid-column:18"></div>
+      <div class="gcol" style="grid-column:19"></div>
+      <div class="gcol" style="grid-column:20"></div>
+      <div class="gcol" style="grid-column:21"></div>
+      <div class="gcol" style="grid-column:22"></div>
+      <div class="gcol wstart" style="grid-column:23"></div>
+      <div class="gcol" style="grid-column:24"></div>
+      <div class="gcol" style="grid-column:25"></div>
+      <div class="gcol" style="grid-column:26"></div>
+      <div class="gcol" style="grid-column:27"></div>
+      <div class="gcol" style="grid-column:28"></div>
+      <div class="gcol" style="grid-column:29"></div>
+      <div class="gcol wstart" style="grid-column:30"></div>
+      <div class="gcol" style="grid-column:31"></div>
+      <div class="gcol" style="grid-column:32"></div>
+      <div class="gcol" style="grid-column:33"></div>
+      <div class="gcol gend" style="grid-column:34"></div>
+      <!-- sombreado fin de semana (sáb/dom) -->
+      <div class="wknd-col" style="grid-column:7/9"></div>
+      <div class="wknd-col" style="grid-column:14/16"></div>
+      <div class="wknd-col" style="grid-column:21/23"></div>
+      <div class="wknd-col" style="grid-column:28/30"></div>
+      <!-- separadores horizontales entre sectores -->
+      <div class="hsep" style="grid-row:3"></div>
+      <div class="hsep" style="grid-row:4"></div>
+      <div class="hsep" style="grid-row:7"></div>
+      <div class="hsep" style="grid-row:8"></div>
+      <div class="hsep" style="grid-row:12"></div>
+      <!-- línea HOY (3 jul) -->
+      <div class="nowline" style="grid-row:3/15;grid-column:6/7"></div>
+      <div class="nowtag"  style="grid-row:2;grid-column:6/7">Hoy</div>
+
+      <!-- WEEK HEADERS (fila 1) -->
+      <div class="wk pre" style="grid-row:1;grid-column:2/9"><span class="wn">Semana 9</span><span class="wr">29 jun – 5 jul</span><span class="wg">Pre-lanzamiento</span></div>
+      <div class="wk pre" style="grid-row:1;grid-column:9/16"><span class="wn">Semana 10</span><span class="wr">6 – 12 jul</span><span class="wg">Assets finales</span></div>
+      <div class="wk"     style="grid-row:1;grid-column:16/23"><span class="wn">Semana 11</span><span class="wr">13 – 19 jul</span><span class="wg">+5.000 · acum. 5.000</span></div>
+      <div class="wk"     style="grid-row:1;grid-column:23/30"><span class="wn">Semana 12</span><span class="wr">20 – 26 jul</span><span class="wg">+7.000 · acum. 12.000</span></div>
+      <div class="wk"     style="grid-row:1;grid-column:30/35"><span class="wn">Semana 13</span><span class="wr">27 – 31 jul</span><span class="wg">+8.000 · acum. 20.000</span></div>
+
+      <!-- DAY HEADERS (fila 2) -->
+      <div class="day wk1" style="grid-column:2"><span class="dow">Lu</span>29<span class="mo">jun</span></div>
+      <div class="day" style="grid-column:3"><span class="dow">Ma</span>30</div>
+      <div class="day" style="grid-column:4"><span class="dow">Mi</span>1<span class="mo">jul</span></div>
+      <div class="day" style="grid-column:5"><span class="dow">Ju</span>2</div>
+      <div class="day today" style="grid-column:6"><span class="dow">Vi</span>3</div>
+      <div class="day wknd" style="grid-column:7"><span class="dow">Sá</span>4</div>
+      <div class="day wknd" style="grid-column:8"><span class="dow">Do</span>5</div>
+      <div class="day wk1" style="grid-column:9"><span class="dow">Lu</span>6<span class="mo">jul</span></div>
+      <div class="day" style="grid-column:10"><span class="dow">Ma</span>7</div>
+      <div class="day" style="grid-column:11"><span class="dow">Mi</span>8</div>
+      <div class="day" style="grid-column:12"><span class="dow">Ju</span>9</div>
+      <div class="day" style="grid-column:13"><span class="dow">Vi</span>10</div>
+      <div class="day wknd" style="grid-column:14"><span class="dow">Sá</span>11</div>
+      <div class="day wknd" style="grid-column:15"><span class="dow">Do</span>12</div>
+      <div class="day wk1" style="grid-column:16"><span class="dow">Lu</span>13<span class="mo">jul</span></div>
+      <div class="day" style="grid-column:17"><span class="dow">Ma</span>14</div>
+      <div class="day" style="grid-column:18"><span class="dow">Mi</span>15</div>
+      <div class="day" style="grid-column:19"><span class="dow">Ju</span>16</div>
+      <div class="day" style="grid-column:20"><span class="dow">Vi</span>17</div>
+      <div class="day wknd" style="grid-column:21"><span class="dow">Sá</span>18</div>
+      <div class="day wknd" style="grid-column:22"><span class="dow">Do</span>19</div>
+      <div class="day wk1" style="grid-column:23"><span class="dow">Lu</span>20<span class="mo">jul</span></div>
+      <div class="day" style="grid-column:24"><span class="dow">Ma</span>21</div>
+      <div class="day" style="grid-column:25"><span class="dow">Mi</span>22</div>
+      <div class="day" style="grid-column:26"><span class="dow">Ju</span>23</div>
+      <div class="day" style="grid-column:27"><span class="dow">Vi</span>24</div>
+      <div class="day wknd" style="grid-column:28"><span class="dow">Sá</span>25</div>
+      <div class="day wknd" style="grid-column:29"><span class="dow">Do</span>26</div>
+      <div class="day wk1" style="grid-column:30"><span class="dow">Lu</span>27<span class="mo">jul</span></div>
+      <div class="day" style="grid-column:31"><span class="dow">Ma</span>28</div>
+      <div class="day" style="grid-column:32"><span class="dow">Mi</span>29</div>
+      <div class="day" style="grid-column:33"><span class="dow">Ju</span>30</div>
+      <div class="day" style="grid-column:34"><span class="dow">Vi</span>31</div>
+
+      <!-- STEAM PAGE (fila 3) -->
+      <div class="slabel sl-steam" style="grid-row:3;grid-column:1"><span class="sname">Steam Page</span></div>
+      <div class="bar c-steam" style="grid-row:3;grid-column:4/7">Screenshots</div>
+      <div class="bar c-steam" style="grid-row:3;grid-column:9/12">Screenshots finales</div>
+
+      <!-- REVEAL TRAILER (filas 4-6) -->
+      <div class="slabel sl-trailer" style="grid-row:4/7;grid-column:1"><span class="sname">Reveal Trailer</span></div>
+      <div class="bar c-trailer" style="grid-row:4;grid-column:3/6">Footage / capturas</div>
+      <div class="bar c-trailer" style="grid-row:5;grid-column:4/7">Edit</div>
+      <div class="bar c-trailer" style="grid-row:5;grid-column:9/13">Edit</div>
+      <div class="bar c-trailer" style="grid-row:6;grid-column:4/7">Generación VO</div>
+      <div class="bar c-trailer" style="grid-row:6;grid-column:9/13">Sonido final</div>
+
+      <!-- LOGO (fila 7) -->
+      <div class="slabel sl-logo" style="grid-row:7;grid-column:1"><span class="sname">Logo</span><span class="snote">Identidad</span></div>
+      <div class="bar c-logo" style="grid-row:7;grid-column:5/7">Logo V02</div>
+      <div class="bar c-logo" style="grid-row:7;grid-column:9/11">Logo V03</div>
+
+      <!-- MARKETING (filas 8-11) -->
+      <div class="slabel sl-mkt" style="grid-row:8/12;grid-column:1"><span class="sname">Marketing</span><span class="snote">Redes · comunidad · growth</span></div>
+      <div class="bar c-mkt" style="grid-row:8;grid-column:4/7">Abrir redes + posteos TikTok / IG</div>
+      <div class="bar c-mkt" style="grid-row:8;grid-column:9/11">Discord</div>
+      <div class="bar c-mkt" style="grid-row:8;grid-column:11/14">Web links</div>
+      <div class="bar c-mkt" style="grid-row:9;grid-column:4/7">Research Discord</div>
+      <div class="bar c-mkt" style="grid-row:9;grid-column:9/14">Posteos Reddit / X · Logo A/B testing</div>
+      <div class="bar c-mkt" style="grid-row:10;grid-column:5/7">Reddit post</div>
+      <!-- goal bands -->
+      <div class="goalband"      style="grid-row:11;grid-column:16/23"><span class="g">+5.000</span><span class="s">Wishlists</span><span class="c">Acum. <b>5.000</b></span></div>
+      <div class="goalband"      style="grid-row:11;grid-column:23/30"><span class="g">+7.000</span><span class="s">Wishlists</span><span class="c">Acum. <b>12.000</b></span></div>
+      <div class="goalband done" style="grid-row:11;grid-column:30/35"><span class="g">+8.000</span><span class="s">Wishlists</span><span class="c">Total <b>20.000</b> ✓</span></div>
+
+      <!-- MILESTONES (filas 12-14) -->
+      <div class="slabel sl-mile" style="grid-row:12/15;grid-column:1"><span class="sname">Milestones</span></div>
+      <!-- lane A -->
+      <div class="mstone" style="grid-row:12;grid-column:6/7">Reveal Trailer V02</div>
+      <div class="mstone" style="grid-row:12;grid-column:10/11">Reveal Trailer V03</div>
+      <div class="mstone" style="grid-row:12;grid-column:12/13">Reveal Trailer V04</div>
+      <div class="mstone final" style="grid-row:12;grid-column:13/14">Reveal Trailer FINAL</div>
+      <!-- lane B -->
+      <div class="mstone" style="grid-row:13;grid-column:6/7">Logo V02</div>
+      <div class="mstone" style="grid-row:13;grid-column:10/11">Logo V03</div>
+      <!-- lane C -->
+      <div class="mstone" style="grid-row:14;grid-column:6/7">Steam Page V02</div>
+      <div class="mstone" style="grid-row:14;grid-column:9/10">WIP Steam publish ticket</div>
+      <div class="mstone" style="grid-row:14;grid-column:10/11">Steam Page V03</div>
+      <div class="mstone final" style="grid-row:14;grid-column:13/14">Steam Page FINAL</div>
+      <!-- 20K final -->
+      <div class="m20k" style="grid-row:12/15;grid-column:34/35">20K<small>Wishlists · 31 jul</small></div>
+    </div>
+
+    <!-- ============ PLAYBOOK ============ -->
+    <div class="foot">
+      <div class="playbook">
+        <h3>Playbook semanal</h3>
+        <div class="h3sub">Semanas 11–13 · estructura repetible · propuesta a validar</div>
+        <div class="pillars">
+          <div class="pillar"><b>1 · Contenido &amp; cadencia</b><span>Ritmo fijo semanal en TikTok / IG / Reddit / X: devlogs, GIFs y humor de aerolínea banana.</span></div>
+          <div class="pillar"><b>2 · Comunidad</b><span>Discord activo, Steam events y colabos con otras demos para tráfico cruzado.</span></div>
+          <div class="pillar"><b>3 · Orgánico / Paid</b><span>A/B de capsule y tags, keywords Steam y test chico de ads si el número lo pide.</span></div>
+          <div class="pillar"><b>4 · Prensa / Influencers</b><span>Outreach a curators y streamers, press kit y armar pipeline de publishers.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BOTTOM BAR ============ -->
+    <div class="bottombar">
+      <div class="legend">
+        <span class="li"><span class="sw" style="background:var(--steam-bg);border-color:var(--steam-bd)"></span>Steam Page</span>
+        <span class="li"><span class="sw" style="background:var(--trailer-bg);border-color:var(--trailer-bd)"></span>Reveal Trailer</span>
+        <span class="li"><span class="sw" style="background:var(--logo-bg);border-color:var(--logo-bd)"></span>Logo</span>
+        <span class="li"><span class="sw" style="background:var(--mkt-bg);border-color:var(--mkt-bd)"></span>Marketing</span>
+        <span class="li"><span class="sw" style="background:var(--mile-bg);border-color:var(--mile-bd)"></span>Milestone</span>
+        <span class="li"><span class="sw" style="background:var(--mile-tx);border-color:var(--mile-tx)"></span>Entregable final</span>
+        <span class="li"><span class="sw" style="background:var(--red);border-color:#a5352c"></span>Objetivo 20K</span>
+      </div>
+      <div class="credit">Banana Airways · Producción: <b>Lu</b> · Actualizado 3 jul 2026</div>
+    </div>
+  </main>
+</div>
+
+<div class="hint noprint">Vista web full-width. Para PDF: <b>Cmd + P</b> → Destino <b>PDF</b> → Márgenes <b>Ninguno</b> · Gráficos de fondo <b>ON</b> · Horizontal</div>
+</body>
+</html>
