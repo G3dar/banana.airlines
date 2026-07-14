@@ -91,6 +91,13 @@
   .credit{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:#7a7f88;margin-top:1.4rem;padding-top:.9rem;border-top:2px solid rgba(30,49,87,.18);}
   .credit b{color:var(--navy);}
 
+  /* hero CTA */
+  .cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1.7rem;}
+  .btn{font-family:'Archivo',sans-serif;font-weight:800;font-size:.9rem;text-transform:uppercase;letter-spacing:.03em;padding:.72rem 1.2rem;border-radius:9px;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;border:1px solid;transition:filter .15s;}
+  .btn.steam{background:#1b2838;color:#fff;border-color:#0d151f;}
+  .btn.trailer{background:var(--gold);color:#241800;border-color:var(--gold-dk);}
+  .btn:hover{filter:brightness(1.08);}
+
   @media (max-width:900px){.blocks{grid-template-columns:repeat(2,1fr);}.cards{grid-template-columns:1fr;}}
   @media (max-width:520px){.blocks{grid-template-columns:1fr;}}
 </style>
@@ -106,6 +113,11 @@
   </header>
 
   <main>
+    <div class="cta">
+      <a class="btn trailer" href="#TRAILER_URL">▶ Watch trailer</a>
+      <a class="btn steam" href="#STEAM_URL">Wishlist on Steam</a>
+    </div>
+
     <!-- TIMELINE -->
     <section>
       <div class="sec-h"><span class="n">1</span><h2>Timeline</h2></div>
@@ -201,6 +213,7 @@
             <li><b>IndieGameJoe</b> (X)</li>
             <li><b>Best Indie Games · Indie Games Hub</b></li>
             <li><b>Six One Indie</b> showcase</li>
+            <li><b>→ Post:</b> trailer + Steam wishlist link.</li>
           </ul>
         </div>
         <div class="card press">
