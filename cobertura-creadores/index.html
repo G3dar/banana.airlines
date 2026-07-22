@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banana Airways · Cobertura de creadores</title>
+<meta name="description" content="Cobertura de la colaboración de creadores para Banana Airways — 4 cuentas, ~246K de alcance en 3 mercados, hacia el wishlist en Steam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --banana:#F5C518; --banana-soft:#FFE783; --banana-deep:#C9A20A;
+    --cream:#F4EDD7; --paper:#FBF6E4;
+    --palm:#2C5530; --palm-soft:#B5CFA8;
+    --sky-deep:#2F6F95; --coral:#D94B3E; --coral-deep:#A82F24;
+    --ink:#1A1A1F; --ink-soft:#4A4A52;
+    --font-display:"Stardos Stencil",Impact,sans-serif;
+    --font-chunk:"Bowlby One",system-ui,sans-serif;
+    --font-mono:"DM Mono",ui-monospace,"Courier New",monospace;
+    --font-body:"Fraunces",Georgia,serif;
+    --c-batur:#D94B3E; --c-alex:#2F6F95; --c-kevin:#C9A20A; --c-coop:#2C5530;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { font-family:var(--font-body); color:var(--ink); background:var(--cream); line-height:1.45; padding:2rem 1rem 4rem; }
+  .sheet { max-width:900px; margin:0 auto; background:var(--paper); border:2.5px solid var(--ink); border-radius:6px; box-shadow:10px 10px 0 rgba(26,26,31,.12); overflow:hidden; }
+
+  /* Barra descarga */
+  .toolbar { max-width:900px; margin:0 auto 1.25rem; display:flex; justify-content:flex-end; }
+  .btn-pdf { font-family:var(--font-chunk); font-size:.8rem; letter-spacing:.04em; background:var(--banana); color:var(--ink); border:2.5px solid var(--ink); border-radius:4px; padding:.6rem 1.1rem; cursor:pointer; box-shadow:3px 3px 0 var(--ink); }
+  .btn-pdf:active { transform:translate(3px,3px); box-shadow:0 0 0 var(--ink); }
+
+  /* Ticker */
+  .ticker { background:var(--ink); color:var(--banana); font-family:var(--font-mono); font-size:.72rem; letter-spacing:.12em; padding:.55rem 1.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .ticker b { color:#fff; } .ticker span { margin:0 .5rem; }
+
+  /* Header */
+  .head { padding:2.2rem 2.4rem 1.6rem; border-bottom:2.5px dashed var(--ink); position:relative; }
+  .head__kicker { font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--palm); display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; }
+  .head__kicker .dot { width:5px; height:5px; background:var(--coral); border-radius:50%; }
+  .wordmark { font-family:var(--font-display); font-weight:700; line-height:.92; margin:.5rem 0 .3rem; text-transform:uppercase; }
+  .wordmark .l1 { font-size:clamp(2.1rem,7vw,3.4rem); display:block; }
+  .wordmark .l2 { font-size:clamp(1.3rem,4.5vw,2rem); display:block; color:var(--banana-deep); }
+  .head__sub { font-size:1rem; margin-top:.5rem; max-width:44ch; }
+  .head__sub strong { color:var(--coral-deep); }
+  .head__brand { display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap; }
+  .head__logo { display:block; width:auto; height:115px; }
+  .head__titles { display:flex; flex-direction:column; gap:.3rem; }
+
+  /* Secciones */
+  section { padding:1.6rem 2.4rem; border-bottom:1.5px solid rgba(26,26,31,.14); }
+  h2 { font-family:var(--font-chunk); font-size:1.15rem; margin:0 0 1rem; display:flex; align-items:center; gap:.5rem; }
+  h2 .ico { font-size:1.15rem; }
+
+  /* KPIs */
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.7rem; }
+  .kpi { background:var(--ink); border-radius:6px; padding:1.1rem .6rem; text-align:center; color:var(--cream); }
+  .kpi:nth-child(2) { background:var(--palm); }
+  .kpi__num { font-family:var(--font-display); font-size:2.4rem; line-height:1; color:var(--banana); }
+  .kpi:nth-child(2) .kpi__num { color:#fff; }
+  .kpi__lbl { font-family:var(--font-mono); font-size:.6rem; letter-spacing:.06em; text-transform:uppercase; margin-top:.5rem; opacity:.85; }
+
+  /* Cards */
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+  .card { display:grid; grid-template-columns:118px 1fr; border:2px solid var(--ink); border-radius:6px; background:#fff; overflow:hidden; }
+  .card__id { padding:.8rem .7rem; color:#fff; display:flex; flex-direction:column; justify-content:center; }
+  .card--batur .card__id { background:var(--c-batur); }
+  .card--alex .card__id { background:var(--c-alex); }
+  .card--kevin .card__id { background:var(--c-kevin); }
+  .card--coop .card__id { background:var(--c-coop); }
+  .card__num { font-family:var(--font-display); font-size:1.8rem; line-height:1; }
+  .card__plat { font-family:var(--font-mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; margin-top:.35rem; opacity:.92; }
+  .card__body { padding:.7rem .8rem; }
+  .card__handle { font-family:var(--font-chunk); font-size:.82rem; word-break:break-word; color:inherit; text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:2px; display:inline-block; }
+  .card__geo { display:inline-block; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.03em; background:var(--cream); border:1.5px solid var(--ink); border-radius:20px; padding:.1rem .5rem; margin:.4rem 0 .35rem; }
+  .card__aud { font-size:.82rem; }
+  .card__sig { font-family:var(--font-mono); font-size:.66rem; color:var(--ink-soft); margin-top:.4rem; }
+
+  /* Formato */
+  .fmt-title { font-family:var(--font-chunk); font-size:.9rem; margin:1.4rem 0 .6rem; }
+  .fmt { display:grid; gap:.45rem; }
+  .fmt__row { display:grid; grid-template-columns:190px 1fr; gap:.7rem; border:1.5px solid var(--ink); border-radius:4px; padding:.5rem .8rem; background:#fff; font-size:.85rem; align-items:baseline; }
+  .fmt__who { font-family:var(--font-mono); font-size:.72rem; color:var(--palm); }
+  .fmt__what strong { color:var(--coral-deep); }
+  .fmt__row--kevin { background:#FFF7DA; border-color:var(--banana-deep); }
+  .fmt__row--kevin .fmt__who { color:var(--banana-deep); }
+
+  /* Barras alcance */
+  .bars { display:grid; gap:.55rem; }
+  .bar-row { display:grid; grid-template-columns:118px 1fr 58px; align-items:center; gap:.7rem; }
+  .bar-row__lbl { font-family:var(--font-mono); font-size:.72rem; }
+  .bar-track { background:var(--cream); border:1.5px solid var(--ink); border-radius:3px; height:22px; overflow:hidden; }
+  .bar-fill { height:100%; }
+  .bar-row__val { font-family:var(--font-chunk); font-size:.78rem; text-align:right; }
+
+  /* Split idioma */
+  .split-lbl { font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin:1.3rem 0 .35rem; }
+  .split { display:flex; height:40px; border:2px solid var(--ink); border-radius:5px; overflow:hidden; }
+  .split__seg { display:flex; align-items:center; justify-content:center; font-family:var(--font-chunk); font-size:.8rem; color:#fff; }
+  .split__tr { background:var(--coral); } .split__pt { background:var(--banana-deep); } .split__es { background:var(--palm); }
+
+  /* Estrategia */
+  .strat { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; }
+  .strat__box { border:2px solid var(--ink); border-radius:6px; padding:.9rem .95rem; background:#fff; }
+  .strat__flag { font-size:1.5rem; }
+  .strat__pct { font-family:var(--font-display); font-size:2.1rem; line-height:1; margin:.15rem 0 .1rem; }
+  .strat__mkt { font-family:var(--font-mono); font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+  .strat__box p { font-size:.82rem; margin-top:.4rem; }
+  .strat--tr .strat__pct { color:var(--coral); }
+  .strat--pt .strat__pct { color:var(--banana-deep); }
+  .strat--es .strat__pct { color:var(--palm); }
+
+  /* Calendario */
+  table.cal { width:100%; border-collapse:collapse; font-size:.86rem; }
+  table.cal th, table.cal td { border:1.5px solid var(--ink); padding:.5rem .65rem; text-align:left; vertical-align:middle; }
+  table.cal thead th { background:var(--ink); color:var(--banana); font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; }
+  table.cal .day { font-family:var(--font-chunk); font-size:.82rem; white-space:nowrap; }
+  table.cal .who { font-family:var(--font-mono); font-size:.76rem; }
+  table.cal .time { font-family:var(--font-mono); font-size:.74rem; color:var(--ink-soft); white-space:nowrap; }
+
+  /* Reglas */
+  ul.rules { list-style:none; display:grid; gap:.5rem; }
+  ul.rules li { padding-left:1.5rem; position:relative; font-size:.88rem; }
+  ul.rules li::before { content:"✦"; position:absolute; left:0; color:var(--coral); }
+  .tbc { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; background:var(--coral); color:#fff; border-radius:20px; padding:.15rem .6rem; vertical-align:middle; }
+  .cta-box { margin-top:1rem; background:var(--banana); border:2.5px solid var(--ink); border-radius:6px; padding:.9rem 1.1rem; font-family:var(--font-chunk); font-size:1.05rem; text-align:center; }
+
+  /* Footer */
+  .foot { padding:1.2rem 2.4rem; background:var(--ink); color:var(--cream); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem; }
+  .foot__line { font-family:var(--font-chunk); font-size:.82rem; color:var(--banana); }
+  .foot__meta { font-family:var(--font-mono); font-size:.66rem; letter-spacing:.06em; opacity:.8; }
+  .note { font-family:var(--font-mono); font-size:.7rem; color:var(--ink-soft); margin-top:.8rem; }
+  .tbc-note { border:2px dashed var(--ink); border-radius:6px; padding:1rem 1.2rem; font-family:var(--font-mono); font-size:.85rem; text-align:center; background:var(--cream); }
+  .tbc-note strong { color:var(--coral-deep); }
+
+  @page { size:A4; margin:11mm; }
+  @media print {
+    body { background:#fff; padding:0; }
+    .toolbar { display:none !important; }
+    .sheet { box-shadow:none; border-width:2px; max-width:none; }
+    section, .head, .foot, .card, .strat__box, table.cal, .cta-box { break-inside:avoid; }
+  }
+  @media (max-width:640px) {
+    .kpis, .cards, .strat { grid-template-columns:1fr 1fr; }
+    .fmt__row { grid-template-columns:1fr; gap:.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="btn-pdf" onclick="window.print()">⤓ DESCARGAR PDF</button>
+</div>
+
+<div class="sheet">
+
+  <div class="ticker">
+    <span><b>VUELO</b> BA · 2026</span> ✦
+    <span><b>CAMPAÑA</b> CREADORES</span> ✦
+    <span><b>OBJETIVO</b> WISHLIST STEAM</span> ✦
+    <span><b>MERCADOS</b> 🇹🇷 🇧🇷 🇨🇱</span> ✦
+  </div>
+
+  <header class="head">
+    <div class="head__brand">
+      <img class="head__logo" src="logo.png" alt="Banana Airways">
+      <div class="head__titles">
+        <h1 class="wordmark"><span class="l2">Influencers Colab</span></h1>
+        <p class="head__kicker"><span>Rev. 22·jul·26</span></p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Resumen -->
+  <section>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi__num">4</div><div class="kpi__lbl">Creadores</div></div>
+      <div class="kpi"><div class="kpi__num">~246K</div><div class="kpi__lbl">Alcance total</div></div>
+      <div class="kpi"><div class="kpi__num">3</div><div class="kpi__lbl">Mercados</div></div>
+      <div class="kpi"><div class="kpi__num">2</div><div class="kpi__lbl">Plataformas</div></div>
+    </div>
+  </section>
+
+  <!-- Cuentas -->
+  <section>
+    <h2><span class="ico">👥</span> Las cuatro cuentas</h2>
+    <div class="cards">
+
+      <div class="card card--batur">
+        <div class="card__id"><div class="card__num">110.4K</div><div class="card__plat">TikTok</div></div>
+        <div class="card__body">
+          <a class="card__handle" href="https://www.tiktok.com/@baturalpergin" target="_blank" rel="noopener">@baturalpergin</a>
+          <span class="card__geo">🇹🇷 Turquía · turco</span>
+          <p class="card__aud">Gaming. El mayor alcance de la campaña.</p>
+          <p class="card__sig">2.6M likes · videos 1M–2.3M views</p>
+        </div>
+      </div>
+
+      <div class="card card--alex">
+        <div class="card__id"><div class="card__num">101.2K</div><div class="card__plat">TikTok</div></div>
+        <div class="card__body">
+          <a class="card__handle" href="https://www.tiktok.com/@alex_soquer" target="_blank" rel="noopener">@alex_soquer</a>
+          <span class="card__geo">🇧🇷 Brasil · portugués</span>
+          <p class="card__aud">Streamer PlayStation · lives diarios.</p>
+          <p class="card__sig">2.9M likes · videos 1.7M–8.2M views</p>
+        </div>
+      </div>
+
+      <div class="card card--kevin">
+        <div class="card__id"><div class="card__num">32.8K</div><div class="card__plat">IG + YouTube</div></div>
+        <div class="card__body">
+          <a class="card__handle" href="https://www.instagram.com/kevinaftergame" target="_blank" rel="noopener">@kevinaftergame</a>
+          <span class="card__geo">🇨🇱 Chile · español</span>
+          <p class="card__aud">Descubrimiento de juegos indie.</p>
+          <p class="card__sig">314 reels · 100% gaming</p>
+        </div>
+      </div>
+
+      <div class="card card--coop">
+        <div class="card__id"><div class="card__num">1.9K</div><div class="card__plat">Instagram</div></div>
+        <div class="card__body">
+          <a class="card__handle" href="https://www.instagram.com/loscooperamigos" target="_blank" rel="noopener">@loscooperamigos</a>
+          <span class="card__geo">🇨🇱 Chile · español</span>
+          <p class="card__aud">SOLO juegos co-op. El más on-brand.</p>
+          <p class="card__sig">86 posts · nicho co-op</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="fmt-title">Qué publica cada uno</h3>
+    <div class="fmt">
+      <div class="fmt__row"><span class="fmt__who">baturalpergin · TikTok</span><span class="fmt__what"><strong>1 video</strong></span></div>
+      <div class="fmt__row"><span class="fmt__who">alex_soquer · TikTok</span><span class="fmt__what"><strong>1 video</strong></span></div>
+      <div class="fmt__row"><span class="fmt__who">loscooperamigos · Instagram</span><span class="fmt__what"><strong>1 Reel</strong></span></div>
+      <div class="fmt__row fmt__row--kevin"><span class="fmt__who">kevinaftergame · IG + YT</span><span class="fmt__what"><strong>3 Reels</strong> · <strong>3 historias</strong> con link a Steam · <strong>1 YouTube</strong> (≤5 min)</span></div>
+    </div>
+  </section>
+
+  <!-- Alcance -->
+  <section>
+    <h2><span class="ico">📊</span> Alcance combinado</h2>
+    <div class="bars">
+      <div class="bar-row"><span class="bar-row__lbl">baturalpergin</span><span class="bar-track"><span class="bar-fill" style="width:100%;background:var(--c-batur)"></span></span><span class="bar-row__val">110.4K</span></div>
+      <div class="bar-row"><span class="bar-row__lbl">alex_soquer</span><span class="bar-track"><span class="bar-fill" style="width:92%;background:var(--c-alex)"></span></span><span class="bar-row__val">101.2K</span></div>
+      <div class="bar-row"><span class="bar-row__lbl">kevinaftergame</span><span class="bar-track"><span class="bar-fill" style="width:30%;background:var(--c-kevin)"></span></span><span class="bar-row__val">32.8K</span></div>
+      <div class="bar-row"><span class="bar-row__lbl">loscooperamigos</span><span class="bar-track"><span class="bar-fill" style="width:2%;background:var(--c-coop)"></span></span><span class="bar-row__val">1.9K</span></div>
+    </div>
+
+    <p class="split-lbl">Reparto por mercado</p>
+    <div class="split">
+      <div class="split__seg split__tr" style="width:45%">🇹🇷 45%</div>
+      <div class="split__seg split__pt" style="width:41%">🇧🇷 41%</div>
+      <div class="split__seg split__es" style="width:14%">🇨🇱 14%</div>
+    </div>
+    <p class="note">86% del alcance es no-hispanohablante (Turquía + Brasil).</p>
+  </section>
+
+  <!-- Estrategia -->
+  <section>
+    <h2><span class="ico">🎯</span> Estrategia de públicos</h2>
+    <div class="strat">
+      <div class="strat__box strat--tr">
+        <div class="strat__flag">🇹🇷</div>
+        <div class="strat__pct">45%</div>
+        <div class="strat__mkt">Turquía · turco</div>
+        <p>La cuenta más grande. Comunidad gamer turca, rara vez tocada por indies.</p>
+      </div>
+      <div class="strat__box strat--pt">
+        <div class="strat__flag">🇧🇷</div>
+        <div class="strat__pct">41%</div>
+        <div class="strat__mkt">Brasil · portugués</div>
+        <p>Comunidad gamer brasileña, gigante. Con Turquía = 86% del alcance.</p>
+      </div>
+      <div class="strat__box strat--es">
+        <div class="strat__flag">🇨🇱</div>
+        <div class="strat__pct">14%</div>
+        <div class="strat__mkt">Chile · español</div>
+        <p>Poco volumen, pero la audiencia con más intención de wishlist.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendario -->
+  <section>
+    <h2><span class="ico">🗓️</span> Calendario de publicación</h2>
+    <div class="tbc-note">📌 Días y horarios de publicación <strong>a definir — TBC (a confirmar)</strong>.</div>
+  </section>
+
+  <footer class="foot">
+    <span class="foot__line">Banana Airways · 2026</span>
+    <span class="foot__meta">Rev. 22·jul·26 · Datos de perfiles públicos</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
