@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banana Airlines · Matchmaking por Steam / Steam Matchmaking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16233f; --navy-2:#1e3157;
+    --gold:#e3b53a; --gold-lt:#f4ce5e; --gold-dk:#c8992a;
+    --cream:#f5efe1; --ink:#20242c; --red:#d24a3f;
+    --green:#4f8a3a; --green-dk:#3a6a29;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;scroll-behavior:smooth;}
+  body{
+    font-family:'Archivo',system-ui,sans-serif;color:var(--ink);
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 92% 4%, rgba(227,181,58,.10), transparent 34%),
+      radial-gradient(circle at 3% 98%, rgba(30,49,87,.06), transparent 36%);
+    min-height:100vh;
+  }
+  .page{width:100%;max-width:1180px;margin:0 auto;}
+  a{color:inherit;}
+
+  /* ===== HEADER ===== */
+  header{
+    background:linear-gradient(115deg,#0f1a30 0%, var(--navy) 55%, var(--navy-2) 100%);
+    color:#fff;padding:1.5rem clamp(1.2rem,3vw,3.2rem);
+    display:flex;align-items:center;gap:clamp(1rem,2.5vw,2.4rem);flex-wrap:wrap;
+    border-bottom:6px solid var(--gold);position:relative;
+  }
+  h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(1.8rem,3.4vw,3rem);line-height:.92;text-transform:uppercase;letter-spacing:.01em;flex:1 1 260px;}
+  h1 em{font-style:normal;color:var(--gold-lt);}
+
+  .lang{position:absolute;top:1.1rem;right:clamp(1.2rem,3vw,3.2rem);display:flex;gap:.25rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:.2rem;}
+  .lang button{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;color:#cfd8e8;background:none;border:none;padding:.28rem .55rem;border-radius:4px;cursor:pointer;text-transform:uppercase;}
+  .lang button.on{background:var(--gold);color:#241800;}
+
+  main{padding:clamp(1.4rem,3vw,2.6rem) clamp(1.2rem,3vw,3.2rem) 3.5rem;}
+  section{margin-bottom:clamp(2.4rem,4vw,3.4rem);}
+  h2{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(1.2rem,2vw,1.6rem);text-transform:uppercase;color:var(--navy);letter-spacing:.01em;margin-bottom:1rem;}
+
+  /* ===== GAME CARDS ===== */
+  .games{display:flex;flex-direction:column;gap:1.4rem;}
+  .game{background:#fff;border:1px solid rgba(30,49,87,.12);border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(22,35,63,.07);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
+  .game.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);}
+  .game .vids{background:#0d1420;display:flex;flex-direction:column;gap:2px;}
+  .game.rev .vids{order:2;}
+  .vfig{position:relative;background:#000;}
+  .vfig video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000;}
+  .vfig .vlbl{position:absolute;top:.5rem;left:.5rem;background:rgba(13,20,32,.82);color:#fff;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.22rem .55rem;border-radius:5px;z-index:2;}
+  .game .body{padding:1.3rem 1.4rem 1.4rem;display:flex;flex-direction:column;}
+  .game .gtop{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.6rem;}
+  .game .gname{font-family:'Anton',sans-serif;font-size:1.55rem;text-transform:uppercase;color:var(--navy);line-height:1;letter-spacing:.01em;}
+  .game .verdict{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;padding:.24rem .6rem;border-radius:999px;color:#fff;}
+  .vd-native{background:var(--green);}
+  .vd-hybrid{background:var(--gold-dk);}
+  .vd-unused{background:#9a9a9a;}
+  .game .gdesc{font-size:.98rem;color:#3f4552;line-height:1.55;margin:0;}
+  .game .body{justify-content:center;}
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;}
+  .chip{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:.75rem;letter-spacing:.03em;padding:.28rem .6rem;border-radius:999px;background:rgba(30,49,87,.07);color:var(--navy);border:1px solid rgba(30,49,87,.12);}
+  .chip.on{background:rgba(79,138,58,.13);color:var(--green-dk);border-color:rgba(79,138,58,.3);}
+  .chip.off{background:rgba(210,74,63,.09);color:#9c3b33;border-color:rgba(210,74,63,.22);text-decoration:line-through;text-decoration-thickness:1px;}
+
+  /* ===== COMPARISON TABLE ===== */
+  .tblwrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(30,49,87,.12);box-shadow:0 2px 10px rgba(22,35,63,.06);}
+  table.cmp{width:100%;min-width:700px;border-collapse:collapse;background:#fff;font-size:.92rem;}
+  table.cmp th,table.cmp td{padding:.72rem .8rem;text-align:center;border-bottom:1px solid rgba(30,49,87,.09);}
+  table.cmp thead th{background:linear-gradient(160deg,var(--navy),var(--navy-2));color:#fff;font-family:'Archivo Narrow',sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:.78rem;}
+  table.cmp tbody th{text-align:left;font-family:'Archivo Narrow',sans-serif;font-weight:700;color:var(--navy);font-size:.9rem;background:rgba(245,239,225,.5);}
+  table.cmp td .y{color:var(--green-dk);font-weight:700;font-size:1.05rem;}
+  table.cmp td .n{color:#c4c8d0;font-size:1.05rem;}
+  table.cmp td .p{color:var(--gold-dk);font-weight:700;font-size:1.05rem;}
+  table.cmp tbody tr:last-child td, table.cmp tbody tr:last-child th{border-bottom:none;}
+  table.cmp tbody tr.key th, table.cmp tbody tr.key td{background:rgba(227,181,58,.1);}
+  .legend{font-size:.82rem;color:#6a7180;margin-top:.7rem;line-height:1.5;}
+  .legend b{color:var(--navy);}
+
+  /* ===== REC BOX ===== */
+  .rec{background:linear-gradient(160deg,#eaf4e2,#dceccf);border:1.5px solid var(--green);border-left:8px solid var(--green);border-radius:14px;padding:1.3rem 1.5rem;box-shadow:0 3px 14px rgba(79,138,58,.12);}
+  .conP{font-size:1.05rem;line-height:1.65;color:#2f4322;}
+  .conP b{color:var(--green-dk);}
+
+  @media(max-width:820px){
+    .game,.game.rev{grid-template-columns:1fr;}
+    .game.rev .vids{order:0;}
+  }
+  @media(max-width:640px){ .lang{position:static;margin-top:.4rem;} }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Matchmaking Research</h1>
+    <div class="lang">
+      <button data-lang="es" class="on">ES</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="juegos">
+      <div class="games" id="games"></div>
+    </section>
+
+    <section id="comparativa">
+      <h2 data-t="cmpH"></h2>
+      <div class="tblwrap"><table class="cmp" id="cmp"></table></div>
+      <div class="legend" data-t="cmpLegend"></div>
+    </section>
+
+    <section id="conclusion">
+      <h2 data-t="conH"></h2>
+      <div class="rec"><p class="conP" data-t="conP"></p></div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ============ CONFIG (bilingüe) ============ */
+const GAMES = [
+  {
+    id:'peak', name:'Peak', verdict:'native',
+    videos:[
+      {src:'peak-invite', es:'Invitar a un amigo', en:'Inviting a friend'},
+      {src:'peak-invited', es:'Unirse / ser invitado', en:'Joining / being invited'}
+    ],
+    es:'Menú de tres botones: crear, unirse o jugar offline. Se une por <b>código</b> o por <b>invitación de Steam</b>, con Rich Presence completa.',
+    en:'Three-button menu: create, join or play offline. You join by <b>code</b> or by <b>Steam invite</b>, with full Rich Presence.',
+    chips:[{es:'Crear / Unirse / Offline',en:'Create / Join / Offline',on:true},{es:'Código',en:'Code',on:true},{es:'Invitación Steam',en:'Steam invite',on:true},{es:'Rich Presence',en:'Rich Presence',on:true}]
+  },
+  {
+    id:'repo', name:'R.E.P.O.', verdict:'hybrid',
+    videos:[
+      {src:'repo', es:'Salas públicas + servidores', en:'Public rooms + server list'},
+      {src:'repo-2', es:'Crear + invitar por Steam', en:'Create + invite via Steam'}
+    ],
+    es:'Crear e invitar por Steam, y desde 2025 también <b>salas públicas</b> con <b>lista de servidores</b> y <b>matchmaking aleatorio</b> por región.',
+    en:'Create and invite via Steam, plus since 2025 <b>public rooms</b> with a <b>server list</b> and <b>random matchmaking</b> by region.',
+    chips:[{es:'Crear + invitar Steam',en:'Create + Steam invite',on:true},{es:'Salas públicas',en:'Public rooms',on:true},{es:'Lista de servidores',en:'Server list',on:true},{es:'Matchmaking aleatorio',en:'Random matchmaking',on:true}]
+  },
+  {
+    id:'yapyap', name:'YapYap', verdict:'native',
+    videos:[
+      {src:'yapyap', es:'Juego completo', en:'Full game'},
+      {src:'yapyap-demo', es:'Demo', en:'Demo'}
+    ],
+    es:'Un solo <b>botón de Play</b>; se invita desde dentro del juego. Sala privada y pública, pero <b>sin lista de servidores</b>: el flujo nativo de Steam alcanza.',
+    en:'A single <b>Play button</b>; you invite from inside the game. Private and public rooms, but <b>no server list</b> — the native Steam flow is enough.',
+    chips:[{es:'Botón Play',en:'Play button',on:true},{es:'Invitar in-game',en:'In-game invite',on:true},{es:'Lista de servidores',en:'Server list',on:false}]
+  },
+  {
+    id:'rvthereyet', name:'RVThereYet', verdict:'unused',
+    videos:[
+      {src:'rvthereyet', es:'Lista de servidores (vacía)', en:'Server list (empty)'}
+    ],
+    es:'Tiene <b>lista de servidores</b>, pero nadie la usa: sin servidores públicos activos, pese a ser bastante jugado.',
+    en:'It has a <b>server list</b>, but nobody uses it — no active public servers, despite being fairly popular.',
+    chips:[{es:'Lista de servidores',en:'Server list',on:true},{es:'Sin servers activos',en:'No active servers',off:true}]
+  },
+  {
+    id:'project-doors', name:'Project Doors', verdict:'unused',
+    videos:[
+      {src:'project-doors', es:'Lista de servidores', en:'Server list'}
+    ],
+    es:'Tiene <b>lista de servidores</b>, pero la demo quedó sin actividad: su pico fue durante el Steam Fest.',
+    en:'It has a <b>server list</b>, but the demo went quiet — its peak was during Steam Fest.',
+    chips:[{es:'Lista de servidores',en:'Server list',on:true},{es:'Poca actividad',en:'Low activity',off:true}]
+  }
+];
+
+const CMP_ROWS = [
+  {es:'Crear + invitar por Steam', en:'Create + Steam invite', vals:{peak:'y',repo:'y',yapyap:'y','rvthereyet':'?','project-doors':'?'}},
+  {es:'Unirse por código', en:'Join by code', vals:{peak:'y',repo:'p',yapyap:'n','rvthereyet':'n','project-doors':'n'}},
+  {es:'Rich Presence', en:'Rich Presence', vals:{peak:'y',repo:'y',yapyap:'y','rvthereyet':'?','project-doors':'?'}},
+  {es:'Lista de servidores', en:'Server list', vals:{peak:'n',repo:'y',yapyap:'n','rvthereyet':'y','project-doors':'y'}},
+  {es:'Matchmaking aleatorio', en:'Random matchmaking', vals:{peak:'n',repo:'y',yapyap:'n','rvthereyet':'n','project-doors':'n'}},
+  {key:true, es:'¿Se usa en la práctica?', en:'Actually used?', vals:{peak:'y',repo:'y',yapyap:'y','rvthereyet':'n','project-doors':'n'}}
+];
+const CMP_COLS = ['peak','repo','yapyap','rvthereyet','project-doors'];
+const CMP_NAMES = {peak:'Peak',repo:'R.E.P.O.',yapyap:'YapYap','rvthereyet':'RVThereYet','project-doors':'Project Doors'};
+
+const T = {
+  es:{
+    cmpH:'Comparativa',
+    cmpLegend:'<b>✓</b> lo tiene · <b>~</b> parcial · <b>—</b> no lo tiene · <b>?</b> no verificado. La clave es la última fila: tener la feature no significa que se use.',
+    conH:'Conclusión',
+    conP:'La lista de servidores no parece ser un patrón uniforme entre estos juegos: algunos la implementan pero <b>no se usa realmente</b> (RVThereYet, Project Doors), mientras que otros logran un flujo funcional sin ella, apoyándose en el <b>sistema nativo de Steam</b> (Peak, YapYap) o <b>combinando ambos enfoques</b> (R.E.P.O.).',
+    vNative:'Steam nativo', vHybrid:'Híbrido', vUnused:'Server list sin uso'
+  },
+  en:{
+    cmpH:'Comparison',
+    cmpLegend:'<b>✓</b> has it · <b>~</b> partial · <b>—</b> doesn\'t have it · <b>?</b> not verified. The key row is the last one: having the feature doesn\'t mean it\'s used.',
+    conH:'Conclusion',
+    conP:'A server list doesn\'t seem to be a uniform pattern across these games: some implement it but <b>it goes unused</b> (RVThereYet, Project Doors), while others achieve a working flow without one, leaning on the <b>native Steam system</b> (Peak, YapYap) or <b>combining both approaches</b> (R.E.P.O.).',
+    vNative:'Native Steam', vHybrid:'Hybrid', vUnused:'Unused server list'
+  }
+};
+
+let LANG='es';
+const $=(s,c=document)=>c.querySelector(s);
+function el(t,c,html){const n=document.createElement(t);if(c)n.className=c;if(html!=null)n.innerHTML=html;return n;}
+function verdictLabel(v){const t=T[LANG];return v==='native'?t.vNative:v==='hybrid'?t.vHybrid:t.vUnused;}
+
+function renderGames(){
+  const wrap=$('#games'); wrap.innerHTML='';
+  GAMES.forEach((g,i)=>{
+    const card=el('div','game'+(i%2?' rev':''));
+    const vids=el('div','vids');
+    g.videos.forEach(v=>{
+      const fig=el('figure','vfig');
+      fig.appendChild(el('span','vlbl', v[LANG]));
+      const vid=document.createElement('video');
+      vid.src='media/'+v.src+'.mp4'; vid.poster='media/'+v.src+'.jpg';
+      vid.autoplay=true; vid.loop=true; vid.muted=true; vid.playsInline=true; vid.setAttribute('playsinline','');
+      vid.preload='metadata';
+      fig.appendChild(vid); vids.appendChild(fig);
+    });
+    card.appendChild(vids);
+    const body=el('div','body');
+    const top=el('div','gtop');
+    top.appendChild(el('span','gname', g.name));
+    top.appendChild(el('span','verdict vd-'+g.verdict, verdictLabel(g.verdict)));
+    body.appendChild(top);
+    body.appendChild(el('p','gdesc', g[LANG]));
+    card.appendChild(body);
+    wrap.appendChild(card);
+  });
+}
+
+function cell(v){
+  if(v==='y')return '<span class="y">✓</span>';
+  if(v==='n')return '<span class="n">—</span>';
+  if(v==='p')return '<span class="p">~</span>';
+  return '<span class="n">?</span>';
+}
+function renderCmp(){
+  const tbl=$('#cmp'); tbl.innerHTML='';
+  const thead=el('thead'); const hr=el('tr'); hr.appendChild(el('th',null,''));
+  CMP_COLS.forEach(c=>hr.appendChild(el('th',null,CMP_NAMES[c])));
+  thead.appendChild(hr); tbl.appendChild(thead);
+  const tb=el('tbody');
+  CMP_ROWS.forEach(row=>{
+    const tr=el('tr', row.key?'key':null);
+    tr.appendChild(el('th',null,row[LANG]));
+    CMP_COLS.forEach(c=>tr.appendChild(el('td',null,cell(row.vals[c]))));
+    tb.appendChild(tr);
+  });
+  tbl.appendChild(tb);
+}
+
+function render(){
+  const t=T[LANG];
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('[data-t]').forEach(n=>{const k=n.dataset.t;if(t[k]!=null)n.innerHTML=t[k];});
+  renderGames(); renderCmp();
+}
+
+document.querySelectorAll('.lang button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    LANG=b.dataset.lang;
+    document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
